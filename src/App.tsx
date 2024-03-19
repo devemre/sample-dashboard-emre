@@ -1,26 +1,17 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React from "react";
+import { RouterProvider } from "react-router-dom";
+import router from "./router";
+import PreloaderComponent from "./shared-components/Preloader.component";
+import useGlobalStore from "./store/hooks/use-global-store.hook";
 
-function App() {
+const App: React.FC = (): JSX.Element => {
+  const { preloaderStatus } = useGlobalStore();
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <>
+      <RouterProvider router={router} />
+      {preloaderStatus && <PreloaderComponent />}
+    </>
   );
-}
+};
 
-export default App;
+export default React.memo(App);
